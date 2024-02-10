@@ -17,7 +17,7 @@ class Error:
 			11: "problem with opening input file",
 			12: "problem when opening output file",
 			21: "wrong or missing header in the source code",
-			22: "unknown or incorrect operation code in the course code",
+			22: "unknown or incorrect operation code in the source code",
 			23: "other lexical or syntactic error of the source code",
 			99: "internal error"
 		}

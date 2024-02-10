@@ -18,15 +18,15 @@ xmlGenerator = XMLGenerator()
 
 # Open the source file
 try:
-    with open(argv.source, "r") as sourceFile:
-        line = sourceFile.readline()
+	with open(argv.source, "r") as sourceFile:
+		line = sourceFile.readline()
 
-        while line:
-            parser.parseLine(line, xmlGenerator)
-            line = sourceFile.readline()
-            
+		while line:
+			parsedLine = parser.parseLine(line, xmlGenerator)
+			line = sourceFile.readline()
+			
 except FileNotFoundError:
-    err.exit_program_with_err_msg(11)
+	err.exit_program_with_err_msg(11)
 
 # Print xml
 xmlGenerator.print()
