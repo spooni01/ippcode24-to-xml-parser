@@ -76,13 +76,13 @@ class Parser:
 		else:
 			for i in range(0, len(paramsPattern)):
 				if(paramsPattern[i] == "var"):
-					if(re.match(r'^(LF|GF|TF)@.+', lineParts[i+1]) == False):
+					if(i + 1 < len(lineParts) and not re.match(r'^(LF|GF|TF)@.+', lineParts[i+1])):
 						self.err.exit_program_with_err_msg(23)	
 				elif(paramsPattern[i] == "symb"):
-					if(re.match(r'^(LF|GF|TF)@.+', lineParts[i+1]) == False and re.match(r'^(int|bool|string|nil|label|type|var)@.+', lineParts[i+1]) == False):
+					if(i + 1 < len(lineParts) and not re.match(r'^(LF|GF|TF)@.+', lineParts[i+1]) and not re.match(r'^(int|bool|string|nil|label|type|var)@.+', lineParts[i+1])):
 						self.err.exit_program_with_err_msg(23)	
 				elif(paramsPattern[i] == "label"):
-					if(re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', lineParts[i+1]) == False):
+					if(i + 1 < len(lineParts) and not re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', lineParts[i+1])):
 						self.err.exit_program_with_err_msg(23)	
 				elif(paramsPattern[i] == "type"):
 					if lineParts[i+1] not in {"int", "bool", "string", "nil", "label", "type", "var"}:
