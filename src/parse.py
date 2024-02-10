@@ -5,25 +5,28 @@
 #############################################
 
 import sys
-import argparse
-import xml.dom.minidom
 from Classes.Error import Error
 from Classes.Arguments import Arguments
+from Classes.Parser import Parser
 from Classes.XMLGenerator import XMLGenerator
 
 # Init classes
 err = Error()
-args = Arguments(sys.argv[1:])
+argv = Arguments(sys.argv[1:], err)
+parser = Parser(err)
 xmlGenerator = XMLGenerator()
 
-#############################################
+# Open the source file
+try:
+    with open(argv.source, "r") as sourceFile:
+        line = sourceFile.readline()
 
-# todo: Parse arguments
-# todo: Lopp throug input
-# todo: Generate xml
+        while line:
+            parser.parseLine(line, xmlGenerator)
+            line = sourceFile.readline()
+            
+except FileNotFoundError:
+    err.exit_program_with_err_msg(11)
 
-xmlGenerator.addElement("int",1)
-xmlGenerator.addElement()
-xmlGenerator.addElement(1)
-xmlGenerator.addElement(1,1,1)
-xmlGenerator.flush()
+# Print xml
+xmlGenerator.print()
