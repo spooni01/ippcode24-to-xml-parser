@@ -6,10 +6,14 @@
 
 import sys
 
+
 class Error:
+    
     def __init__(self):
+
+        # All possible errors
         self.errors = {
-            10: "missing script paramter or using prohibited combination of parameters",
+            10: "missing script parameter or using prohibited combination of parameters",
             11: "problem with opening input file",
             12: "problem when opening output file",
             21: "wrong or missing header in the source code",
@@ -18,6 +22,7 @@ class Error:
             99: "internal error"
         }
 
+    # Exit program with error message
     def exit_program_with_err_msg(self, errNum):
         print("Error: " + self.errors[errNum] + "!", file=sys.stderr)
         sys.exit(errNum)

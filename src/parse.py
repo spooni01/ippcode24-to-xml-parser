@@ -5,10 +5,13 @@
 #############################################
 
 import sys
+import argparse
 from Classes.Error import Error
+from Classes.Arguments import Arguments
 
 # Init classes
 err = Error()
+args = Arguments(sys.argv[1:])
 
 #############################################
 
