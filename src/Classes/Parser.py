@@ -140,6 +140,10 @@ class Parser:
 			if len(lineParts) > i:
 				if(paramsPattern[i-1] == "symb"):
 					pattern, part = self.changeSymb(lineParts[i])
+
+					if pattern == "bool":
+						part = part.lower()
+
 					arguments[i-1] = [pattern, part]
 				else:
 					arguments[i-1] = [paramsPattern[i-1], lineParts[i]]
