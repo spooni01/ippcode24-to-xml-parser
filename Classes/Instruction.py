@@ -18,7 +18,7 @@ class Instruction:
 	arg3 = None
 
 	# Init function for parsing line
-	def __init__(self, line):
+	def __init__(self, intrCnt, line):
 		lineArray = self.lineToArray(line) # Convert line to array
 
 		# Check if line exists, if not, do not set anything
@@ -26,6 +26,8 @@ class Instruction:
 			raise InstrEmptyLineArray()
 		else:
 			self.processArguments(lineArray) # Process the arguments if there are any
+			self.order = intrCnt
+			self.opCode = lineArray[0]
 		
 	# Convert line to array
 	def lineToArray(self, line):
