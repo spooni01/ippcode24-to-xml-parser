@@ -28,4 +28,4 @@ class Arguments:
 	# Check if --help is provided along with other parameters
 	def check_help_and_other_parameters(self):
 		if '--help' in sys.argv[1:] and len(sys.argv) > 2:
-			err = Error(10)
+			Error(10)

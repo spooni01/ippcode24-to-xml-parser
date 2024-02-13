@@ -5,6 +5,7 @@
 #############################################
 
 import sys
+from functions import *
 from Classes.Arguments import *
 from Classes.Instruction import *
 from Classes.XMLGenerator import *
@@ -13,10 +14,18 @@ from Classes.XMLGenerator import *
 # Parse srguments
 argv = Arguments(sys.argv[1:])
 xmlGen = XMLGenerator()
-intrCnt = 1
+intrCnt = 1	# Counter for instruction order
+headerFlag = False # Handler if there was a header
 
 # While cycle through STDIN line by line
 for line in sys.stdin:
+
+	# Check header
+	if headerFlag is False:
+		headerFlag = checkHeader(line)
+		continue
+
+	# Check other lines
 	try:
 		instr = Instruction(intrCnt ,line)
 		xmlGen.addInstr(instr)
@@ -26,3 +35,6 @@ for line in sys.stdin:
 
 # Print parsed code on STDOUT
 xmlGen.print()
+
+
+
