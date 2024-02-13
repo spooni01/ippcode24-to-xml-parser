@@ -1,3 +1,0 @@
--> for a better review, a version with classes Instruction and Arguments would be better, but this version would be less
-optimal and with large input files, a significant change in the execution time of the program would be seen.
-Thus, the parser does not store instructions and arguments in classes, but directly stores them in the class of the XML generator

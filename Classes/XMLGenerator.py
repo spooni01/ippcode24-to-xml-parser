@@ -1,11 +1,15 @@
 #############################################
 # File:		XML generator class 			#
 # Author: 	Adam Ližičiar (xlizic00)		#
-# Date: 	10.2.2024						#
+# Date: 	13.2.2024						#
 #############################################
 
 import xml.dom.minidom
 
+
+#
+#   Class for XMLGenerator
+#
 class XMLGenerator:
     
 	# Init XML DOM, add <program> element
