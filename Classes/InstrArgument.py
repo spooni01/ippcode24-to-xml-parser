@@ -40,7 +40,7 @@ class InstrArgument:
 	def getSecondValue(self, unprocessedOperand, typeOfConstant):
 		secondValue = ""
 
-		parts = unprocessedOperand.split('@')
+		parts = unprocessedOperand.split('@', 1)
 		if len(parts) > 1: 
 			secondValue = parts[1]
 
@@ -71,7 +71,7 @@ class InstrArgument:
 		elif(re.match(r'^nil@nil', unprocessedOperand)):
 			self.type = "nil"
 			self.value = "nil"
-		elif(re.match(r'^int@(-?0x[0-9a-fA-F]+|-?0b[01]+|-?\d+)$', unprocessedOperand)):
+		elif(re.match(r'^int@(-?0x[0-9a-fA-F]+|-?0o[0-7]+|-?\d+)$', unprocessedOperand)):
 			self.type = "int"
 			self.value = self.getSecondValue(unprocessedOperand, "int")
 		else:

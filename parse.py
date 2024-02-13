@@ -33,8 +33,11 @@ for line in sys.stdin:
 	except InstrEmptyLineArray:
 		continue 
 
-# Print parsed code on STDOUT
-xmlGen.print()
+if headerFlag == False: Error(21) # If there was not header, exit with error
+
+# Print parsed code on STDOU
+xmlGen.print() 
+
 
 
 

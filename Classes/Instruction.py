@@ -36,7 +36,7 @@ class Instruction:
 		{"opCode": "EQ", "params": ["var", "symb", "symb"]},
 		{"opCode": "AND", "params": ["var", "symb", "symb"]},
 		{"opCode": "OR", "params": ["var", "symb", "symb"]},
-		{"opCode": "NOT", "params": ["var", "symb", "symb"]},
+		{"opCode": "NOT", "params": ["var", "symb"]},
 		{"opCode": "INT2CHAR", "params": ["var", "symb"]},
 		{"opCode": "STRI2INT", "params": ["var", "symb", "symb"]},
 		{"opCode": "READ", "params": ["var", "type"]},
@@ -101,7 +101,7 @@ class Instruction:
 
 		# Iterate through operands
 		for operand in self.operands:
-			if operand["opCode"].upper() == instrOpCode:
+			if operand["opCode"].upper() == instrOpCode.upper():
 				argumentsPattern = operand["params"]
 				foundCommand = True
 				break
