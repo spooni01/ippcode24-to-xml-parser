@@ -17,6 +17,7 @@ class Instruction:
 	arg1 = None
 	arg2 = None
 	arg3 = None
+	statsPtr = None
 	operands = [
 		{"opCode": "MOVE", "params": ["var", "symb"]},
 		{"opCode": "CREATEFRAME", "params": []},
@@ -56,7 +57,8 @@ class Instruction:
 	]
 
 	# Init function for parsing line
-	def __init__(self, intrCnt, line):
+	def __init__(self, intrCnt, line, statsPtr):
+		self.statsPtr = statsPtr
 		lineArray = self.lineToArray(line) # Convert line to array
 
 		# Check if line exists, if not, do not set anything
@@ -64,7 +66,7 @@ class Instruction:
 			raise InstrEmptyLineArray()
 		else:
 			self.order = intrCnt
-			argumentsPattern = self.saveOpCode(lineArray[0])
+			argumentsPattern = self.saveOpCode(lineArray)
 
 			# Check if the number of arguments is correct
 			if len(argumentsPattern) != len(lineArray) - 1:
@@ -83,6 +85,7 @@ class Instruction:
 	def deleteComment(self, line):
 		index = line.find('#')
 		if index != -1:
+			self.statsPtr.incrementComments()
 			line = line[:index]
 		return line	
 	
@@ -96,23 +99,39 @@ class Instruction:
 			self.arg3 = InstrArgument(lineArray[3], argumentsPattern[2])
 
 	# Check if opcode is correct and save it
-	def saveOpCode(self, instrOpCode):
+	def saveOpCode(self, lineArray):
 		foundCommand = False	# Handler if OPCODE is correct
 
 		# Iterate through operands
 		for operand in self.operands:
-			if operand["opCode"].upper() == instrOpCode.upper():
+			if operand["opCode"].upper() == lineArray[0].upper():
 				argumentsPattern = operand["params"]
 				foundCommand = True
+
+				# Section for statistics
+				self.opCodeStatistics(lineArray)
+
 				break
 	
 		if foundCommand is True:
-			self.opCode = instrOpCode
+			self.opCode = lineArray[0]
 			return argumentsPattern	# Handler for pattern of argument
 		else:
 			Error(22)
 
+	def opCodeStatistics(self, lineArray):
+		self.statsPtr.addFrequent(lineArray[0].upper())
 
+		if lineArray[0].upper() == "LABEL":
+			self.statsPtr.addLabel(lineArray[1])
+		elif lineArray[0].upper() == "BREAK" or lineArray[0].upper() == "JUMP" or lineArray[0].upper() == "JUMPIFEQ" or lineArray[0].upper() == "JUMPIFNEQ" or lineArray[0].upper() == "CALL" or lineArray[0].upper() == "RETURN":
+			self.statsPtr.incrementJumps()
+		
+		if lineArray[0].upper() == "JUMP" or lineArray[0].upper() == "JUMPIFEQ" or lineArray[0].upper() == "JUMPIFNEQ" or lineArray[0].upper() == "CALL":
+			if lineArray[1] in self.statsPtr.labels:
+				self.statsPtr.backjumps += 1
+			else:
+				self.statsPtr.handlerForLabelsNotDefinedYet.append(lineArray[1])
 #
 #   Exception class for empty line
 #

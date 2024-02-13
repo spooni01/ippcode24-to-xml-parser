@@ -8,11 +8,12 @@ from Classes.Error import Error
 
 
 # Function check if there is header
-def checkHeader(line):
+def checkHeader(line, stats):
 	# Delete comments
 	index = line.find('#')
 	if index != -1:
 		line = line[:index]
+		stats.incrementComments()
 
 	# Split and check if header is correct
 	lineArray = line.split()
